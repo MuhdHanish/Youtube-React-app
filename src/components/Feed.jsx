@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 import SideBar from "./SideBar";
 import Videos from "./Videos";
@@ -8,11 +8,14 @@ import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const Feed = () => {
 
-  const [selectedCategory,setSelectedCategory] = useState('New');
-
- useEffect(()=>{
-   fetchFromAPI(`search?part=snippet&q=${selectedCategory}`)
- },[selectedCategory]);
+  const [selectedCategory, setSelectedCategory] = useState("New");
+  const [videos,setVideos] = useState([])
+  
+  useEffect(() => {
+    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then(
+      (data) => setVideos(data.items)
+    );
+  }, [selectedCategory]);
 
   return (
     <>
@@ -25,7 +28,8 @@ const Feed = () => {
           }}
         >
           <SideBar
-          selectedCategory = {selectedCategory} setSelectedCategory = {setSelectedCategory}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
           />
           <Typography
             className="copyright"
@@ -36,7 +40,7 @@ const Feed = () => {
           </Typography>
         </Box>
       </Stack>
-      <Box p={2} sx={{overflowY:'auto',height:'90vh',flex:2}}>
+      <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
         <Typography
           variant="h4"
           fontWeight="bold"
@@ -45,9 +49,9 @@ const Feed = () => {
             color: "#fff",
           }}
         >
-          {selectedCategory} <span style={{color:'#F31503'}}>Videos</span>
+          {selectedCategory} <span style={{ color: "#F31503" }}>Videos</span>
         </Typography>
-        <Videos videos={[]}/>
+        <Videos videos={videos} />
       </Box>
     </>
   );

@@ -7,13 +7,12 @@ import Videos from "./Videos";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const Feed = () => {
-
   const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos,setVideos] = useState([])
-  
+  const [videos, setVideos] = useState([]);
+
   useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then(
-      (data) => setVideos(data.items)
+    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then((data) =>
+      setVideos(data.items)
     );
   }, [selectedCategory]);
 
@@ -39,20 +38,20 @@ const Feed = () => {
             Copyright 2023 MuhdHanish
           </Typography>
         </Box>
+        <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            mb={2}
+            sx={{
+              color: "#fff",
+            }}
+          >
+            {selectedCategory} <span style={{ color: "#F31503" }}>Videos</span>
+          </Typography>
+          <Videos videos={videos} />
+        </Box>
       </Stack>
-      <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          mb={2}
-          sx={{
-            color: "#fff",
-          }}
-        >
-          {selectedCategory} <span style={{ color: "#F31503" }}>Videos</span>
-        </Typography>
-        <Videos videos={videos} />
-      </Box>
     </>
   );
 };

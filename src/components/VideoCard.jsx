@@ -11,7 +11,7 @@ import {
 
 const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
   return (
-   <Box sx={{ml:{xs:"100px",sm:0}}}>
+   <Box >
     <Card sx={{ 
      width: "300px",
      height: "260px",
